@@ -1,50 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
-# Create your models here.
-import numpy as np
-from scipy import signal, fftpack
-import pywt
-from pyhht.emd import EMD
-
-
-# Create your models here.
-
-
-class Asset(models.Model):
-    """
-    所有设备模型的抽象基类，这个模型类不创建数据表
-    """
-    asset_status = (
-        (0, 'online'),
-        (1, 'offline'),
-        (2, 'unknown'),
-        (3, 'defective'),
-        (4, 'backup'),
-    )
-
-    name = models.CharField(max_length=64, unique=True, verbose_name='Name of asset')
-    sn = models.CharField(max_length=128, unique=True, verbose_name='Serial number')
-    statu = models.SmallIntegerField(choices=asset_status, default=2, verbose_name='Asset statu')
-
-    manufacturer = models.ForeignKey('Manufacturer', null=True, blank=True, on_delete=models.SET_NULL,
-                                     verbose_name='Manufacturer')
-    tags = models.ManyToManyField('Tag', null=True, blank=True, verbose_name='Tags')
-    admin = models.ForeignKey(User, null=True, blank=True, verbose_name='Administrator', on_delete=models.SET_NULL)
-    location = models.ForeignKey('Location', null=True, blank=True, verbose_name='Asset location',
-                                 on_delete=models.SET_NULL)
-    contract = models.ForeignKey('Contract', null=True, blank=True, verbose_name='Asset contract',
-                                 on_delete=models.SET_NULL)
-
-    lr_time = models.DateTimeField(null=True, blank=True, verbose_name='Last repair/check date')
-    pr_time = models.DateTimeField(null=True, blank=True, verbose_name='Purchase date')
-    md_time = models.DateTimeField(auto_now_add=True, verbose_name='Modified date')
-    cr_time = models.DateTimeField(auto_now=True, verbose_name='Created date')
-    sr_time = models.DateTimeField(null=True, blank=True, verbose_name='Start running date')
-
-    memo = models.TextField(null=True, blank=True, verbose_name='Memory')
-
-    class Meta:
-        abstract = True
+from .base import Asset
 
 
 class EquipmentGroup(Asset):
@@ -106,12 +61,12 @@ class Machine(Asset):
     )
     machine_type = models.CharField(max_length=64, choices=machine_types, null=True, blank=True,
                                     verbose_name='Type of machine')
+    parent_equipment_group = models.ForeignKey(EquipmentGroup, on_delete=models.CASCADE, null=True,
+                                               blank=True)  # 外键与父级机组关联
 
 
 class Motor(models.Model):
     machine = models.OneToOneField(Machine, on_delete=models.CASCADE)  # 一对一与机组共有资产表关联
-    parent_equipment_group = models.ForeignKey(EquipmentGroup, on_delete=models.CASCADE)  # 外键与父级机组关联
-
     efficiency = models.FloatField(null=True, blank=True, verbose_name='Efficiency /%')  # 效率
     phase_number = models.SmallIntegerField(null=True, blank=True, verbose_name='Number of phases ')  # 相数
     pole_pairs_number = models.SmallIntegerField(null=True, blank=True, verbose_name='Number of pole_pairs ')  # 极对数
@@ -123,7 +78,6 @@ class Motor(models.Model):
 
 class GearBox(models.Model):
     machine = models.OneToOneField(Machine, on_delete=models.CASCADE)  # 一对一与机组共有资产表关联
-    parent_equipment_group = models.ForeignKey(EquipmentGroup, on_delete=models.CASCADE)  # 外键与父级机组关联
 
     ratio = models.CharField(max_length=32, null=True, blank=True, verbose_name='Speed ratio')  # 减速比
     input_torque = models.FloatField(null=True, blank=True, verbose_name='Input torque/N.m')  # 输入力矩
@@ -133,7 +87,6 @@ class GearBox(models.Model):
 
 class Engine(models.Model):
     machine = models.OneToOneField(Machine, on_delete=models.CASCADE)  # 一对一与机组共有资产表关联
-    parent_equipment_group = models.ForeignKey(EquipmentGroup, on_delete=models.CASCADE)  # 外键与父级机组关联
 
     cylinder_number = models.SmallIntegerField(null=True, blank=True, verbose_name='Number of cylinders')  # 气缸数目
     displacement = models.FloatField(null=True, blank=True, verbose_name='Displacement /L')  # 排量
@@ -156,11 +109,11 @@ class Component(Asset):
     )
     component_type = models.CharField(choices=component_types, null=True, blank=True, max_length=64,
                                       verbose_name='Type of component')
+    parent_machine = models.ForeignKey(Machine, on_delete=models.CASCADE, null=True, blank=True)  # 外键与父级机械关联
 
 
 class Bearing(models.Model):
     component = models.OneToOneField(Component, on_delete=models.CASCADE)  # 一对一与机组共有资产表关联
-    parent_equipment_group = models.ForeignKey(Machine, on_delete=models.CASCADE)  # 外键与父级机械关联
 
     inner_race_diameter = models.FloatField(null=True, blank=True, verbose_name='Inner race diameter /mm')  # 内径
     inner_race_width = models.FloatField(null=True, blank=True, verbose_name='Inner race width /mm')  # 内圈宽度
@@ -175,7 +128,6 @@ class Bearing(models.Model):
 
 class Gear(models.Model):
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
-    parent_equipment_group = models.ForeignKey(Machine, on_delete=models.CASCADE)
 
     teeth_number = models.SmallIntegerField(null=True, blank=True, verbose_name='Number of tooth')  # 齿数
     modulus = models.FloatField(null=True, blank=True, verbose_name='Modulus')  # 模数
@@ -187,7 +139,6 @@ class Gear(models.Model):
 
 class Rotor(models.Model):
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
-    parent_equipment_group = models.ForeignKey(Machine, on_delete=models.CASCADE)
 
     power = models.FloatField(null=True, blank=True, verbose_name='Power /kW')  # 功率
     length = models.FloatField(null=True, blank=True, verbose_name='Length /mm')  # 铁心长度
@@ -198,13 +149,22 @@ class Rotor(models.Model):
 
 class Stator(models.Model):
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
-    parent_equipment_group = models.ForeignKey(Machine, on_delete=models.CASCADE)
 
     power = models.FloatField(null=True, blank=True, verbose_name='Power /kW')  # 功率
     length = models.FloatField(null=True, blank=True, verbose_name='Length /mm')  # 铁心长度
     outer_diameter = models.FloatField(null=True, blank=True, verbose_name='Outer diameter /mm')  # 外径
     inner_diameter = models.FloatField(null=True, blank=True, verbose_name='Inner diameter /mm')  # 内径
     slot_number = models.SmallIntegerField(null=True, blank=True, verbose_name='Number of slots')  # 槽数
+
+
+class MeasurePoint(models.Model):
+    equipment_group = models.ForeignKey(EquipmentGroup, blank=True, null=True, on_delete=models.SET_NULL)
+    machine = models.ForeignKey(Machine, blank=True, null=True, on_delete=models.SET_NULL)
+    component = models.ForeignKey(Component, blank=True, null=True, on_delete=models.SET_NULL)
+    sensor = models.ForeignKey('Sensor', blank=True, null=True, on_delete=models.SET_NULL)
+
+    location = models.CharField(max_length=256, null=True, blank=True,
+                                verbose_name='Description of the measuring point')
 
 
 class Sensor(Asset):
@@ -218,21 +178,9 @@ class Sensor(Asset):
     )
     sensor_type = models.CharField(max_length=128, choices=sensor_types, null=True, blank=True,
                                    verbose_name='Type of sensor')
-
-
-class MeasurePoint(models.Model):
-    equipment_group = models.ForeignKey(EquipmentGroup, blank=True, null=True, on_delete=models.SET_NULL)
-    machine = models.ForeignKey(Machine, blank=True, null=True, on_delete=models.SET_NULL)
-    component = models.ForeignKey(Component, blank=True, null=True, on_delete=models.SET_NULL)
-    sensor = models.ForeignKey(Sensor, blank=True, null=True, on_delete=models.SET_NULL)
-
-    location = models.CharField(max_length=256, null=True, blank=True,
-                                verbose_name='Description of the measuring point')
-
-
-class SignalCollected(models.Model):
-    vector = models.TextField(blank=False, null=False, verbose_name='Collected Signal vector')
-    measurepoint = models.ForeignKey(MeasurePoint, null=True, blank=True, on_delete=models.SET_NULL)
+    data_collector = models.ForeignKey('DataCollector', null=True, blank=True, on_delete=models.SET_NULL)
+    sampling_frequency = models.BigIntegerField(null=True, blank=True, verbose_name='Sampling frequency /Hz')
+    sampling_interval = models.FloatField(null=True, blank=True, verbose_name='Sampling interval /s')
 
 
 class DataCollector(Asset):
@@ -240,23 +188,9 @@ class DataCollector(Asset):
     所有数据采集模块的共有资产表
     """
     data_collector_types = (
-        'A/D converter',
-        'Amplifier',
+        (0, 'A/D converter'),
+        (1, 'Amplifier'),
     )
-    pass
-
-
-class Manufacturer(models.Model):
-    pass
-
-
-class Location(models.Model):
-    pass
-
-
-class Contract(models.Model):
-    pass
-
-
-class Tag(models.Model):
-    pass
+    data_collector_type = models.CharField(max_length=128, choices=data_collector_types, null=True, blank=True,
+                                           verbose_name='Type of data collector')
+    parent_data_collector = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
