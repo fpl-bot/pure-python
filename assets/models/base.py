@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Asset(models.Model):
     """
-    所有设备模型的抽象基类，这个模型类不创建数据表
+    This is a abstract model
     """
     asset_status = (
         (0, 'online'),

@@ -1,3 +1,8 @@
+"""
+This file create models for assets on field,
+such as equipment,data collector and sensor...,
+by inheriting from base.py-assets
+"""
 from django.db import models
 from .base import Asset
 

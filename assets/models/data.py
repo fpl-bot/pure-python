@@ -1,3 +1,7 @@
+"""
+This file creats models for virtural data
+such as manufacturer, SIGNAL!, Contract
+"""
 from django.db import models
 import numpy as np
 from scipy import signal, fftpack
@@ -24,7 +28,7 @@ class Contract(models.Model):
     detail = models.TextField('Details', blank=True, null=True)
     start_time = models.DateField('Start time', blank=True, null=True)
     end_time = models.DateField('Out time', blank=True, null=True)
-    c_time = models.DateField('Created time', auto_now_add=True)
+    c_time = models.DateField('Created time', auto_now_add=True,null=True)
     m_time = models.DateField('Modified time', auto_now=True)
 
 

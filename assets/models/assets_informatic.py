@@ -1,3 +1,8 @@
+"""
+This file created models for informatic equip, such as server,nic,router...
+All of the models are assigned one-to-one relationship to ITAsset which are inherited from Asset
+"""
+
 from django.db import models
 from .base import Asset
 
