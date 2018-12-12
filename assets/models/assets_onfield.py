@@ -180,6 +180,9 @@ class MeasurePoint(models.Model):
     location = models.CharField(max_length=256, null=True, blank=True,
                                 verbose_name='Description of the measuring point')
 
+    def __str__(self):
+        return '<%s><%s>  %s' % (self.equipment_group, self.machine, self.location)
+
 
 class Sensor(Asset):
     """

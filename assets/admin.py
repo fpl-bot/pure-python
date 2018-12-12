@@ -84,8 +84,12 @@ class MeasurePointAdmin(admin.ModelAdmin):
 
 
 class SensorAdmin(admin.ModelAdmin):
-    list_display = ['id','name', 'sensor_type', 'sampling_frequency', 'sampling_interval']
+    list_display = ['id', 'name', 'sensor_type', 'sampling_frequency', 'sampling_interval']
     ordering = ['id']
+
+
+class SignalAdmin(admin.ModelAdmin):
+    list_display = ['id', 'measurepoint', 'c_time']
 
 
 admin.site.register(EquipmentGroup, EquipmentGroupAdmin)
@@ -109,3 +113,4 @@ admin.site.register(Sensor, SensorAdmin)
 
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Manufacturer)
+admin.site.register(SignalCollected,SignalAdmin)
