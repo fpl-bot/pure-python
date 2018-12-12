@@ -29,8 +29,8 @@ class Asset(models.Model):
 
     lr_time = models.DateTimeField(null=True, blank=True, verbose_name='Last repair/check date')
     pr_time = models.DateTimeField(null=True, blank=True, verbose_name='Purchase date')
-    md_time = models.DateTimeField(auto_now_add=True, verbose_name='Modified date')
-    cr_time = models.DateTimeField(auto_now=True, verbose_name='Created date')
+    md_time = models.DateTimeField(auto_now=True, verbose_name='Modified date')
+    cr_time = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
     sr_time = models.DateTimeField(null=True, blank=True, verbose_name='Start running date')
 
     memo = models.TextField(null=True, blank=True, verbose_name='Memory')

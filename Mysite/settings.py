@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cmdb.wsgi.application'
+WSGI_APPLICATION = 'Mysite.wsgi.application'
 
 
 # Database

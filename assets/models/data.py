@@ -15,10 +15,16 @@ class Manufacturer(models.Model):
     telephone = models.CharField('Telephone', max_length=30, blank=True, null=True)
     memo = models.CharField('Memory', max_length=128, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Location(models.Model):
     name = models.CharField('Location', max_length=64)
     parent_location = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
 
 
 class Contract(models.Model):
@@ -28,13 +34,19 @@ class Contract(models.Model):
     detail = models.TextField('Details', blank=True, null=True)
     start_time = models.DateField('Start time', blank=True, null=True)
     end_time = models.DateField('Out time', blank=True, null=True)
-    c_time = models.DateField('Created time', auto_now_add=True,null=True)
+    c_time = models.DateField('Created time', auto_now_add=True, null=True)
     m_time = models.DateField('Modified time', auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=32, unique=True, verbose_name='Tag name')
     c_day = models.DateField(auto_now_add=True, verbose_name='Created time')
+
+    def __str__(self):
+        return self.name
 
 
 class SignalCollected(models.Model):

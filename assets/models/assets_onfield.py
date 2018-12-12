@@ -17,8 +17,11 @@ class EquipmentGroup(Asset):
         (2, 'Generator'),
     )
 
-    equipment_group_type = models.CharField(max_length=64, choices=equipment_group_types, null=True, blank=True,
-                                            verbose_name='Type of equipment group')
+    equipment_group_type = models.SmallIntegerField(choices=equipment_group_types, null=True, blank=True,
+                                                    verbose_name='Type of equipment group')
+
+    def __str__(self):
+        return self.name
 
 
 class TopDriver(models.Model):
@@ -64,10 +67,13 @@ class Machine(Asset):
         (1, 'GearBox'),
         (2, 'Engine'),
     )
-    machine_type = models.CharField(max_length=64, choices=machine_types, null=True, blank=True,
-                                    verbose_name='Type of machine')
+    machine_type = models.SmallIntegerField(choices=machine_types, null=True, blank=True,
+                                            verbose_name='Type of machine')
     parent_equipment_group = models.ForeignKey(EquipmentGroup, on_delete=models.CASCADE, null=True,
                                                blank=True)  # 外键与父级机组关联
+
+    def __str__(self):
+        return self.name
 
 
 class Motor(models.Model):
@@ -112,9 +118,12 @@ class Component(Asset):
         (3, 'Stator'),
         (4, 'Shaft'),
     )
-    component_type = models.CharField(choices=component_types, null=True, blank=True, max_length=64,
-                                      verbose_name='Type of component')
+    component_type = models.SmallIntegerField(choices=component_types, null=True, blank=True,
+                                              verbose_name='Type of component')
     parent_machine = models.ForeignKey(Machine, on_delete=models.CASCADE, null=True, blank=True)  # 外键与父级机械关联
+
+    def __str__(self):
+        return self.name
 
 
 class Bearing(models.Model):
@@ -166,7 +175,7 @@ class MeasurePoint(models.Model):
     equipment_group = models.ForeignKey(EquipmentGroup, blank=True, null=True, on_delete=models.SET_NULL)
     machine = models.ForeignKey(Machine, blank=True, null=True, on_delete=models.SET_NULL)
     component = models.ForeignKey(Component, blank=True, null=True, on_delete=models.SET_NULL)
-    sensor = models.ForeignKey('Sensor', blank=True, null=True, on_delete=models.SET_NULL)
+    sensor = models.OneToOneField('Sensor', blank=True, null=True, on_delete=models.SET_NULL)
 
     location = models.CharField(max_length=256, null=True, blank=True,
                                 verbose_name='Description of the measuring point')
@@ -181,11 +190,14 @@ class Sensor(Asset):
         (1, 'CurrentProbe'),
         (2, 'TacoMeter'),
     )
-    sensor_type = models.CharField(max_length=128, choices=sensor_types, null=True, blank=True,
-                                   verbose_name='Type of sensor')
+    sensor_type = models.SmallIntegerField(choices=sensor_types, null=True, blank=True,
+                                           verbose_name='Type of sensor')
     data_collector = models.ForeignKey('DataCollector', null=True, blank=True, on_delete=models.SET_NULL)
     sampling_frequency = models.BigIntegerField(null=True, blank=True, verbose_name='Sampling frequency /Hz')
     sampling_interval = models.FloatField(null=True, blank=True, verbose_name='Sampling interval /s')
+
+    def __str__(self):
+        return '<%s>  %s' % (self.get_sensor_type_display(), self.name)
 
 
 class DataCollector(Asset):
