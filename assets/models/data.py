@@ -7,7 +7,7 @@ import numpy as np
 from scipy import signal, fftpack
 import pywt
 from pyhht.emd import EMD
-from .assets_onfield import MeasurePoint
+from .assets_onfield import *
 
 
 class Manufacturer(models.Model):
@@ -47,6 +47,19 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class WarningLog(models.Model):
+    severity_choice = (
+        (0, 'Slight'),
+        (1, 'Attention'),
+        (2, 'Serious'),
+    )
+    equipment_group = models.ForeignKey(EquipmentGroup, blank=True, null=True, on_delete=models.SET_NULL)
+    c_day = models.DateTimeField(auto_now_add=True, verbose_name='Created time')
+    description = models.TextField(blank=False, null=False, verbose_name='Warning description')
+    severity = models.SmallIntegerField(choices=severity_choice, null=True, blank=True,
+                                        verbose_name='Warning severity')
 
 
 class SignalCollected(models.Model):

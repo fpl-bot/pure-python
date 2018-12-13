@@ -92,6 +92,11 @@ class SignalAdmin(admin.ModelAdmin):
     list_display = ['id', 'measurepoint', 'c_time']
 
 
+class WarningLogAdmin(admin.ModelAdmin):
+    list_display = ['equipment_group', 'c_day','severity']
+    radio_fields = {"equipment_group": admin.VERTICAL}
+
+
 admin.site.register(EquipmentGroup, EquipmentGroupAdmin)
 admin.site.register(TopDriver, TopDriverAdmin)
 admin.site.register(Propeller, PropellerAdmin)
@@ -113,4 +118,5 @@ admin.site.register(Sensor, SensorAdmin)
 
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Manufacturer)
-admin.site.register(SignalCollected,SignalAdmin)
+admin.site.register(SignalCollected, SignalAdmin)
+admin.site.register(WarningLog, WarningLogAdmin)
