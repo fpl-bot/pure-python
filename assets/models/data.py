@@ -67,16 +67,18 @@ class SignalCollected(models.Model):
     measurepoint = models.ForeignKey(MeasurePoint, null=True, blank=True, on_delete=models.SET_NULL)
     c_time = models.DateTimeField(auto_now_add=True, verbose_name='Collected time')
 
-    def get_wave_form(self):
+    def get_waveform(self):
         waveform = self.wave.split(';')
+        waveform = map(float, waveform)
+        waveform = list(waveform)
         return waveform
 
-    def get_time_vector(self):
-        time = [i / 10240 for i in range(len(self.get_wave_form()))]
+    def get_timevector(self):
+        time = [i / 10240 for i in range(len(self.get_waveform()))]
         return time
 
     def fft(self):
-        Signal = np.array(self.get_wave_form(), dtype=float)
+        Signal = np.array(self.get_waveform(), dtype=float)
         Signal = signal.detrend(Signal, type='constant')
         fft_size = int(Signal.shape[0])
         spec = np.fft.rfft(Signal)
@@ -87,7 +89,7 @@ class SignalCollected(models.Model):
         # return spec,freq
 
     def stft(self):
-        Signal = np.array(self.get_wave_form(), dtype=float)
+        Signal = np.array(self.get_waveform(), dtype=float)
         Signal = signal.detrend(Signal, type='constant')
         f, t, Zxx = signal.stft(Signal, 10240, nperseg=128)
         Zxx = np.abs(Zxx)
@@ -98,14 +100,14 @@ class SignalCollected(models.Model):
         return t, f, stft
 
     def envlope(self):
-        Signal = np.array(self.get_wave_form(), dtype=float)
+        Signal = np.array(self.get_waveform(), dtype=float)
         Signal = signal.detrend(Signal, type='constant')
         Shiftted = fftpack.hilbert(Signal)
         Envelope = np.sqrt(Shiftted ** 2 + Signal ** 2)
         return Envelope
 
     def wavelet_pack(self):
-        Signal = np.array(self.get_wave_form(), dtype=float)
+        Signal = np.array(self.get_waveform(), dtype=float)
         Signal = signal.detrend(Signal, type='constant')
         wp = pywt.WaveletPacket(Signal, 'db3', 'symmetric', maxlevel=4)
         nodes = wp.get_level(4, order='freq')
@@ -119,7 +121,7 @@ class SignalCollected(models.Model):
         return x, y, wlp
 
     def emd(self):
-        Signal = np.array(self.get_wave_form(), dtype=float)
+        Signal = np.array(self.get_waveform(), dtype=float)
         Signal = signal.detrend(Signal, type='constant')
         decomposer = EMD(Signal)
         IMFs = decomposer.decompose()

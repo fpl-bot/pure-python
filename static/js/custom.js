@@ -29,14 +29,14 @@ $(function () {
                 $('.navbar-brand span').show();
                 //$(".sidebartoggler i").removeClass("ti-menu");
             }
-            
+
             var height = ((window.innerHeight > 0) ? window.innerHeight : this.screen.height) - 1;
             height = height - topOffset;
             if (height < 1) height = 1;
             if (height > topOffset) {
                 $(".page-wrapper").css("min-height", (height) + "px");
             }
-       
+
     };
     $(window).ready(set);
     $(window).on("resize", set);
@@ -60,10 +60,10 @@ $(function () {
         }
     });
     // topbar stickey on scroll
-    
+
     $(".fix-header .topbar").stick_in_parent({});
-    
-    
+
+
     // this is for close icon when navigation open in mobile view
     $(".nav-toggler").click(function () {
         $("body").toggleClass("show-sidebar");
@@ -72,7 +72,7 @@ $(function () {
     });
     $(".sidebartoggler").on('click', function () {
         //$(".sidebartoggler i").toggleClass("ti-menu");
-    }); 
+    });
     $(".search-box a, .search-box .app-search .srh-btn").on('click', function () {
         $(".app-search").toggle(200);
     });
@@ -104,7 +104,7 @@ $(function () {
                 break;
             }
         }
-        
+
     });
     // ============================================================== 
     //tooltip
@@ -132,15 +132,15 @@ $(function () {
         , size: "5px"
         , height: '100%'
         , color: '#dcdcdc'
-     }); 
+     });
     $('.message-center').slimScroll({
         position: 'right'
         , size: "5px"
-        
+
         , color: '#dcdcdc'
      });
-    
-    
+
+
     $('.aboutscroll').slimScroll({
         position: 'right'
         , size: "5px"
@@ -159,7 +159,7 @@ $(function () {
         , height: '470'
         , color: '#dcdcdc'
      });
-    
+
     $('.slimscrollright').slimScroll({
         height: '100%'
         , position: 'right'
@@ -177,7 +177,7 @@ $(function () {
     $(".list-task li label").click(function () {
         $(this).toggleClass("task-done");
     });
-    
+
     // ============================================================== 
     // Login and Recover Password 
     // ============================================================== 
@@ -193,8 +193,8 @@ $(function () {
             e.preventDefault();
             $(this).closest('.card').find('[data-action="collapse"] i').toggleClass('ti-minus ti-plus');
             $(this).closest('.card').children('.card-block').collapse('toggle');
-           
-        }); 
+
+        });
         // Toggle fullscreen
         $('a[data-action="expand"]').on('click',function(e){
             e.preventDefault();
@@ -209,6 +209,7 @@ $(function () {
     // ============================================================== 
     // This is for the sparkline charts which is coming in the bradcrumb section
     // ==============================================================
+
     $('#monthchart').sparkline(WarningLogCount, {
             type: 'bar',
             height: '35',
@@ -226,7 +227,7 @@ $(function () {
             barColor: '#7460ee'
         });
     var sparkResize;
- 
-        
-    
+
+
+
 });

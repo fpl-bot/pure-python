@@ -8,7 +8,7 @@
             <div class="profile-img"><img src="{% static 'images/users/profile.png' %}"/></div>
             <!-- User profile text-->
             <div class="profile-text"><a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown"
-                                         role="button" aria-haspopup="true" aria-expanded="true">Markarn Doe</a>
+                                         role="button" aria-haspopup="true" aria-expanded="true">Fu Peilun</a>
                 <div class="dropdown-menu animated flipInY"><a href="#" class="dropdown-item"><i class="ti-user"></i> My
                     Profile</a> <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a> <a href="#"
                                                                                                               class="dropdown-item"><i
@@ -25,27 +25,18 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-small-cap">PERSONAL</li>
-                <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                <li><a class="has-arrow waves-effect waves-dark" href="{% url 'assets:dashboard' %}" aria-expanded="false"><i
                         class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{% url 'assets:dashboard' %}">Dashboard 1</a></li>
-                        <li><a href="{% url 'assets:dashboard' %}">Dashboard 2</a></li>
-                        <li><a href="{% url 'assets:dashboard' %}">Dashboard 3</a></li>
-                        <li><a href="{% url 'assets:dashboard' %}">Dashboard 4</a></li>
-                        <li><a href="{% url 'assets:dashboard' %}">Dashboard 5</a></li>
-                        <li><a href="{% url 'assets:dashboard' %}">Dashboard 6</a></li>
-                    </ul>
                 </li>
 
                 <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                         class="mdi mdi-bullseye"></i><span class="hide-menu">Apps</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="app-calendar.html">Calendar</a></li>
-                        <li><a href="app-chat.html">Chat app</a></li>
-                        <li><a href="app-ticket.html">Support Ticket</a></li>
-                        <li><a href="app-contact.html">Contact / Employee</a></li>
-                        <li><a href="app-contact2.html">Contact Grid</a></li>
-                        <li><a href="app-contact-detail.html">Contact Detail</a></li>
+                        <li><a href="{% url 'assets:FFT' %}">FF Transform</a></li>
+                        <li><a href="{% url 'assets:HT' %}">H Transform</a></li>
+                        <li><a href="{% url 'assets:STFT' %}">STF Transform</a></li>
+                        <li><a href="{% url 'assets:WP' %}">WP Transform</a></li>
+                        <li><a href="{% url 'assets:EMD' %}">EM Decomposition</a></li>
                     </ul>
                 </li>
                 <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
