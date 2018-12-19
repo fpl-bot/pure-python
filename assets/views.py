@@ -19,6 +19,7 @@ from django.db.models import Q
 # @csrf_exempt
 def dashboard(request):
     if request.is_ajax():
+        titick = SignalCollected.objects.last().c_time
         jsondata = {
             "health_equip": [EquipmentGroup.objects.filter(statu=0).count(),
                              Machine.objects.filter(statu=0).count(),
@@ -35,7 +36,7 @@ def dashboard(request):
                                   ],
             "signal_sample": SignalCollected.objects.last().get_waveform(),
             "signal_timelabel": SignalCollected.objects.last().get_timevector(),
-            "signal_time": str(SignalCollected.objects.last().c_time),
+            "signal_time": SignalCollected.objects.last().get_timetick(),
         }
 
         return JsonResponse(jsondata)
@@ -60,7 +61,7 @@ def fft(request):
             "Transformed_X": list(freq),
             "Original_Y": SignalCollected.objects.last().get_waveform(),
             "Original_X": SignalCollected.objects.last().get_timevector(),
-            "Time": str(SignalCollected.objects.last().c_time),
+            "Time": SignalCollected.objects.last().get_timetick(),
         }
         return JsonResponse(jsondata)
 
@@ -78,7 +79,7 @@ def ht(request):
             "Transformed_X": SignalCollected.objects.last().get_timevector(),
             "Original_Y": SignalCollected.objects.last().get_waveform(),
             "Original_X": SignalCollected.objects.last().get_timevector(),
-            "signal_time": str(SignalCollected.objects.last().c_time),
+            "signal_time": SignalCollected.objects.last().get_timetick(),
         }
         return JsonResponse(jsondata)
 
@@ -97,7 +98,7 @@ def stft(request):
             "stft": stft,
             "Original_Y": SignalCollected.objects.last().get_waveform(),
             "Original_X": SignalCollected.objects.last().get_timevector(),
-            "signal_time": str(SignalCollected.objects.last().c_time),
+            "signal_time": SignalCollected.objects.last().get_timetick(),
         }
         return JsonResponse(jsondata)
 
@@ -116,7 +117,7 @@ def wp(request):
             "wp": wp,
             "Original_Y": SignalCollected.objects.last().get_waveform(),
             "Original_X": SignalCollected.objects.last().get_timevector(),
-            "signal_time": str(SignalCollected.objects.last().c_time),
+            "signal_time": SignalCollected.objects.last().get_timetick(),
         }
         return JsonResponse(jsondata)
 

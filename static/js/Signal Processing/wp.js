@@ -11,13 +11,14 @@ $(function () {
 
             var myChart_fft = echarts.init(document.getElementById('WP-Transformed'));
             var option_fft = {
-                                title: {
+                tooltip: {},
+                title: {
                     text: 'Wavelet Package Spectrum',
                     subtext: '',
                 },
                 visualMap: {
                     min: 0,
-                    max: 1,
+                    max: 2,
                     calculable: true,
                     realtime: false,
                     inRange: {

@@ -8,6 +8,7 @@ from scipy import signal, fftpack
 import pywt
 from pyhht.emd import EMD
 from .assets_onfield import *
+import datetime
 
 
 class Manufacturer(models.Model):
@@ -73,8 +74,13 @@ class SignalCollected(models.Model):
         waveform = list(waveform)
         return waveform
 
+    def get_timetick(self):
+        temp = self.c_time
+        return str(
+            datetime.datetime(temp.year, temp.month, temp.day, temp.hour, temp.minute, temp.second))
+
     def get_timevector(self):
-        time = [i / 10240 for i in range(len(self.get_waveform()))]
+        time = [round(i / 10240, 5) for i in range(len(self.get_waveform()))]
         return time
 
     def fft(self):

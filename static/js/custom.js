@@ -206,26 +206,7 @@ $(function () {
         $('a[data-action="close"]').on('click',function(){
             $(this).closest('.card').removeClass().slideUp('fast');
         });
-    // ============================================================== 
-    // This is for the sparkline charts which is coming in the bradcrumb section
-    // ==============================================================
 
-    $('#monthchart').sparkline(WarningLogCount, {
-            type: 'bar',
-            height: '35',
-            barWidth: '4',
-            resize: true,
-            barSpacing: '4',
-            barColor: '#1e88e5'
-        });
-    $('#lastmonthchart').sparkline(WarningLogCount, {
-            type: 'bar',
-            height: '35',
-            barWidth: '4',
-            resize: true,
-            barSpacing: '4',
-            barColor: '#7460ee'
-        });
     var sparkResize;
 
 

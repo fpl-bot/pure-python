@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% block title %}Hilbert Transform{% endblock %}
 {% block content %}
-    <div class="container-fluid">
         <div class="row page-titles">
             <div class="col-md-5 col-8 align-self-center">
                 <h3 class="text-themecolor">HT</h3>
@@ -50,13 +49,11 @@
             </div>
         </div>
 
-    </div>
 
 {% endblock %}
 
 {% block javascritp %}
     <script src="{% static 'js/Signal Processing/analyzing.js' %}"></script>
-    <script>
-        var WarningLogCount ={{ WarningLogCount }};
-    </script>
+    <script src="{% static 'plugins/echarts.js' %}"></script>
+
 {% endblock %}

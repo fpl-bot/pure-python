@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% block title %}Empirical Mode Decomposition{% endblock %}
 {% block content %}
-    <div class="container-fluid">
         <div class="row page-titles">
             <div class="col-md-5 col-8 align-self-center">
                 <h3 class="text-themecolor">Empirical Mode Decomposition</h3>
@@ -49,7 +48,6 @@
             </div>
         </div>
 
-    </div>
 
 {% endblock %}
 
@@ -124,7 +122,7 @@
             });
         {% endfor %}
     </script>
-    <script>
-        var WarningLogCount ={{ WarningLogCount }};
-    </script>
+    <script src="{% static 'plugins/echarts.js' %}"></script>
+
+
 {% endblock %}

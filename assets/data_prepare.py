@@ -28,3 +28,5 @@ def get_signaltablevolume():
     cursor.execute(sql)
     results = cursor.fetchall()
     return str(results[0][0])
+
+
