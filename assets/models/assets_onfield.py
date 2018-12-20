@@ -70,7 +70,7 @@ class Machine(Asset):
     machine_type = models.SmallIntegerField(choices=machine_types, null=True, blank=True,
                                             verbose_name='Type of machine')
     parent_equipment_group = models.ForeignKey(EquipmentGroup, on_delete=models.CASCADE, null=True,
-                                               blank=True)  # 外键与父级机组关联
+                                               blank=True, related_name='Machines')  # 外键与父级机组关联
 
     def __str__(self):
         return self.name
@@ -120,7 +120,8 @@ class Component(Asset):
     )
     component_type = models.SmallIntegerField(choices=component_types, null=True, blank=True,
                                               verbose_name='Type of component')
-    parent_machine = models.ForeignKey(Machine, on_delete=models.CASCADE, null=True, blank=True)  # 外键与父级机械关联
+    parent_machine = models.ForeignKey(Machine, on_delete=models.CASCADE, null=True, blank=True,
+                                       related_name='Components')  # 外键与父级机械关联
 
     def __str__(self):
         return self.name
@@ -173,7 +174,7 @@ class Stator(models.Model):
 
 class MeasurePoint(models.Model):
     equipment_group = models.ForeignKey(EquipmentGroup, blank=True, null=True, on_delete=models.SET_NULL)
-    machine = models.ForeignKey(Machine, blank=True, null=True, on_delete=models.SET_NULL)
+    machine = models.ForeignKey(Machine, blank=True, null=True, on_delete=models.SET_NULL, related_name='MeasurePoints')
     component = models.ForeignKey(Component, blank=True, null=True, on_delete=models.SET_NULL)
     sensor = models.OneToOneField('Sensor', blank=True, null=True, on_delete=models.SET_NULL)
 

@@ -19,7 +19,6 @@ from django.db.models import Q
 # @csrf_exempt
 def dashboard(request):
     if request.is_ajax():
-        titick = SignalCollected.objects.last().c_time
         jsondata = {
             "health_equip": [EquipmentGroup.objects.filter(statu=0).count(),
                              Machine.objects.filter(statu=0).count(),
@@ -133,3 +132,15 @@ def emd(request):
     time = signal.get_timevector()
     return render(request, 'assets/analyzing/emd.html', {"imfs": imfs,
                                                          "time": time})
+
+
+def treeview(request):
+    if request.is_ajax():
+        treejson = {'name': 'Offshore Platform', 'children': []}
+        for eg in EquipmentGroup.objects.all():
+            treejson['children'].append({'name': eg.name, 'children': []})
+            for mc in eg.Machines.all():
+                treejson['children'][-1]['children'].append({'name': mc.name, 'children': []})
+                for mp in mc.MeasurePoints.all():
+                    treejson['children'][-1]['children'][-1]['children'].append({'name': mp.id, 'label': mp.location})
+        return JsonResponse(treejson)
