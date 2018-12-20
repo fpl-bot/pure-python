@@ -1,7 +1,7 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : Local-Connection
  Source Server Type    : MySQL
  Source Server Version : 50721
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 12/12/2018 23:54:15
+ Date: 20/12/2018 21:11:50
 */
 
 SET NAMES utf8mb4;
@@ -64,7 +64,15 @@ CREATE TABLE `assets_component`  (
   INDEX `assets_component_location_id_0309f5a2`(`location_id`) USING BTREE,
   INDEX `assets_component_manufacturer_id_3cba75c3`(`manufacturer_id`) USING BTREE,
   INDEX `assets_component_parent_machine_id_4e93760a`(`parent_machine_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of assets_component
+-- ----------------------------
+INSERT INTO `assets_component` VALUES (1, 'TD-Bearing', 'hhNBr5L8', 3, '2018-12-14 13:05:00.000000', '2018-12-14 13:05:00.000000', '2018-12-17 17:08:52.996865', '2018-12-14 13:05:24.581478', '2018-12-14 13:05:00.000000', '', 0, 1, NULL, 1, 1, 2);
+INSERT INTO `assets_component` VALUES (2, 'TD-Bearing2', 'jjNBr5L8', 0, '2018-12-14 13:05:00.000000', '2018-12-14 13:05:00.000000', '2018-12-14 13:06:02.245111', '2018-12-14 13:06:02.245111', '2018-12-14 13:05:00.000000', '', 0, 1, NULL, 1, 1, 2);
+INSERT INTO `assets_component` VALUES (3, 'TD-Stator', 'kiuAg6Mz', 0, '2018-12-14 13:06:00.000000', '2018-12-14 13:06:00.000000', '2018-12-14 13:06:30.184212', '2018-12-14 13:06:30.184212', '2018-12-14 13:06:00.000000', '', 3, 1, NULL, 1, 1, 2);
+INSERT INTO `assets_component` VALUES (4, 'TD-Rotor', 'jjuAg6Mz', 0, '2018-12-14 13:06:00.000000', '2018-12-14 13:06:00.000000', '2018-12-14 13:06:54.332127', '2018-12-14 13:06:54.332127', '2018-12-14 13:06:00.000000', '', 2, 1, NULL, 1, 1, 2);
 
 -- ----------------------------
 -- Table structure for assets_component_tags
@@ -844,6 +852,36 @@ CREATE TABLE `assets_topdriver`  (
 INSERT INTO `assets_topdriver` VALUES (1, 2000, 100, 220, 50, 50, 3000, 4000, 1);
 
 -- ----------------------------
+-- Table structure for assets_warninglog
+-- ----------------------------
+DROP TABLE IF EXISTS `assets_warninglog`;
+CREATE TABLE `assets_warninglog`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `c_day` datetime(6) NOT NULL,
+  `description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `equipment_group_id` int(11) DEFAULT NULL,
+  `severity` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `assets_warninglog_equipment_group_id_10e1c3cf`(`equipment_group_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of assets_warninglog
+-- ----------------------------
+INSERT INTO `assets_warninglog` VALUES (1, '2018-12-13 17:20:10.217857', 'Motor unbalance', 1, 0);
+INSERT INTO `assets_warninglog` VALUES (2, '2018-12-13 17:20:33.867036', 'GearBox', 2, 1);
+INSERT INTO `assets_warninglog` VALUES (3, '2018-12-13 17:20:55.063721', 'Pavane pour une Infante defunte', 7, 0);
+INSERT INTO `assets_warninglog` VALUES (4, '2018-12-01 17:21:06.000000', 'Chopin: 12 Etudes, Op.25 - No.11 In A Minor \"Winter Wind\"', 9, 1);
+INSERT INTO `assets_warninglog` VALUES (5, '2018-11-01 09:59:17.000000', '机组无明显故障，但设备整体状态级别处于C级(中)，运行状况开始恶化。', 2, 1);
+INSERT INTO `assets_warninglog` VALUES (6, '2018-11-11 09:59:25.000000', '机组无明显故障。', 8, 0);
+INSERT INTO `assets_warninglog` VALUES (7, '2018-11-01 09:59:36.000000', '设备整体状态级别处于级D(差)，机组整体部件劣化严重。', 6, 1);
+INSERT INTO `assets_warninglog` VALUES (8, '2018-10-18 09:59:44.000000', '轴承可能存在磨损或损坏故障。', 6, 2);
+INSERT INTO `assets_warninglog` VALUES (9, '2018-08-01 09:59:52.000000', '泵轴与电机转轴可能存在不对中故障。', 5, 1);
+INSERT INTO `assets_warninglog` VALUES (10, '2018-09-01 09:59:59.000000', '轴套、口环或级间套可能存在碰磨故障。', 2, 0);
+INSERT INTO `assets_warninglog` VALUES (11, '2018-09-01 10:00:05.000000', '转子可能存在不平衡故障。', 3, 0);
+INSERT INTO `assets_warninglog` VALUES (12, '2018-08-16 10:00:14.000000', '机械松动。', 12, 1);
+
+-- ----------------------------
 -- Table structure for auth_group
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_group`;
@@ -880,7 +918,7 @@ CREATE TABLE `auth_permission`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `auth_permission_content_type_id_codename_01ab375a_uniq`(`content_type_id`, `codename`) USING BTREE,
   INDEX `auth_permission_content_type_id_2f476e4b`(`content_type_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 145 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 149 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of auth_permission
@@ -1029,6 +1067,10 @@ INSERT INTO `auth_permission` VALUES (141, 'Can add top driver', 36, 'add_topdri
 INSERT INTO `auth_permission` VALUES (142, 'Can change top driver', 36, 'change_topdriver');
 INSERT INTO `auth_permission` VALUES (143, 'Can delete top driver', 36, 'delete_topdriver');
 INSERT INTO `auth_permission` VALUES (144, 'Can view top driver', 36, 'view_topdriver');
+INSERT INTO `auth_permission` VALUES (145, 'Can add warning log', 37, 'add_warninglog');
+INSERT INTO `auth_permission` VALUES (146, 'Can change warning log', 37, 'change_warninglog');
+INSERT INTO `auth_permission` VALUES (147, 'Can delete warning log', 37, 'delete_warninglog');
+INSERT INTO `auth_permission` VALUES (148, 'Can view warning log', 37, 'view_warninglog');
 
 -- ----------------------------
 -- Table structure for auth_user
@@ -1053,7 +1095,7 @@ CREATE TABLE `auth_user`  (
 -- ----------------------------
 -- Records of auth_user
 -- ----------------------------
-INSERT INTO `auth_user` VALUES (1, 'pbkdf2_sha256$120000$MQKnUZA38dLS$DHTyre1QJfUdQUnD1r9isHenaC/1gak0soWbfey7dBU=', '2018-12-12 23:02:20.373926', 1, 'fpl117', '', '', 'peilun.fu117@gmail.com', 1, 1, '2018-12-12 12:02:23.105740');
+INSERT INTO `auth_user` VALUES (1, 'pbkdf2_sha256$120000$MQKnUZA38dLS$DHTyre1QJfUdQUnD1r9isHenaC/1gak0soWbfey7dBU=', '2018-12-17 17:08:43.243987', 1, 'fpl117', '', '', 'peilun.fu117@gmail.com', 1, 1, '2018-12-12 12:02:23.105740');
 
 -- ----------------------------
 -- Table structure for auth_user_groups
@@ -1099,7 +1141,7 @@ CREATE TABLE `django_admin_log`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `django_admin_log_content_type_id_c4bce8eb`(`content_type_id`) USING BTREE,
   INDEX `django_admin_log_user_id_c564eba6`(`user_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 164 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 185 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_admin_log
@@ -1267,6 +1309,27 @@ INSERT INTO `django_admin_log` VALUES (160, '2018-12-12 23:24:00.286625', '37', 
 INSERT INTO `django_admin_log` VALUES (161, '2018-12-12 23:24:08.178994', '38', 'SignalCollected object (38)', 1, '[{\"added\": {}}]', 31, 1);
 INSERT INTO `django_admin_log` VALUES (162, '2018-12-12 23:24:14.189377', '39', 'SignalCollected object (39)', 1, '[{\"added\": {}}]', 31, 1);
 INSERT INTO `django_admin_log` VALUES (163, '2018-12-12 23:24:22.715726', '40', 'SignalCollected object (40)', 1, '[{\"added\": {}}]', 31, 1);
+INSERT INTO `django_admin_log` VALUES (164, '2018-12-13 17:20:10.218855', '1', 'WarningLog object (1)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (165, '2018-12-13 17:20:33.877010', '2', 'WarningLog object (2)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (166, '2018-12-13 17:20:55.064719', '3', 'WarningLog object (3)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (167, '2018-12-13 17:21:06.029919', '4', 'WarningLog object (4)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (168, '2018-12-14 09:59:17.123889', '5', 'WarningLog object (5)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (169, '2018-12-14 09:59:25.703262', '6', 'WarningLog object (6)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (170, '2018-12-14 09:59:36.285135', '7', 'WarningLog object (7)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (171, '2018-12-14 09:59:44.625005', '8', 'WarningLog object (8)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (172, '2018-12-14 09:59:52.959833', '9', 'WarningLog object (9)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (173, '2018-12-14 09:59:59.639817', '10', 'WarningLog object (10)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (174, '2018-12-14 10:00:05.749726', '11', 'WarningLog object (11)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (175, '2018-12-14 10:00:14.531430', '12', 'WarningLog object (12)', 1, '[{\"added\": {}}]', 37, 1);
+INSERT INTO `django_admin_log` VALUES (176, '2018-12-14 13:05:24.585468', '1', 'TD-Bearing', 1, '[{\"added\": {}}]', 8, 1);
+INSERT INTO `django_admin_log` VALUES (177, '2018-12-14 13:06:02.247104', '2', 'TD-Bearing2', 1, '[{\"added\": {}}]', 8, 1);
+INSERT INTO `django_admin_log` VALUES (178, '2018-12-14 13:06:30.187206', '3', 'TD-Stator', 1, '[{\"added\": {}}]', 8, 1);
+INSERT INTO `django_admin_log` VALUES (179, '2018-12-14 13:06:54.334122', '4', 'TD-Rotor', 1, '[{\"added\": {}}]', 8, 1);
+INSERT INTO `django_admin_log` VALUES (180, '2018-12-17 16:55:50.311375', '1', 'TD-Bearing', 2, '[{\"changed\": {\"fields\": [\"statu\"]}}]', 8, 1);
+INSERT INTO `django_admin_log` VALUES (181, '2018-12-17 16:56:30.356640', '1', 'TD-Bearing', 2, '[{\"changed\": {\"fields\": [\"statu\"]}}]', 8, 1);
+INSERT INTO `django_admin_log` VALUES (182, '2018-12-17 16:58:55.698224', '1', 'TD-Bearing', 2, '[{\"changed\": {\"fields\": [\"statu\"]}}]', 8, 1);
+INSERT INTO `django_admin_log` VALUES (183, '2018-12-17 17:05:58.893926', '1', 'TD-Bearing', 2, '[{\"changed\": {\"fields\": [\"statu\"]}}]', 8, 1);
+INSERT INTO `django_admin_log` VALUES (184, '2018-12-17 17:08:52.998859', '1', 'TD-Bearing', 2, '[{\"changed\": {\"fields\": [\"statu\"]}}]', 8, 1);
 
 -- ----------------------------
 -- Table structure for django_content_type
@@ -1278,7 +1341,7 @@ CREATE TABLE `django_content_type`  (
   `model` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `django_content_type_app_label_model_76bd3d3b_uniq`(`app_label`, `model`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 37 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 38 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_content_type
@@ -1319,6 +1382,7 @@ INSERT INTO `django_content_type` VALUES (33, 'assets', 'stator');
 INSERT INTO `django_content_type` VALUES (34, 'assets', 'storagedevice');
 INSERT INTO `django_content_type` VALUES (35, 'assets', 'tag');
 INSERT INTO `django_content_type` VALUES (36, 'assets', 'topdriver');
+INSERT INTO `django_content_type` VALUES (37, 'assets', 'warninglog');
 
 -- ----------------------------
 -- Table structure for django_migrations
@@ -1330,7 +1394,7 @@ CREATE TABLE `django_migrations`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -1355,6 +1419,9 @@ INSERT INTO `django_migrations` VALUES (17, 'assets', '0002_auto_20181212_1823',
 INSERT INTO `django_migrations` VALUES (18, 'assets', '0003_auto_20181212_1848', '2018-12-12 18:48:10.866174');
 INSERT INTO `django_migrations` VALUES (19, 'assets', '0004_auto_20181212_2007', '2018-12-12 20:07:10.049344');
 INSERT INTO `django_migrations` VALUES (20, 'assets', '0005_auto_20181212_2032', '2018-12-12 20:32:18.701828');
+INSERT INTO `django_migrations` VALUES (21, 'assets', '0006_warninglog', '2018-12-13 17:09:44.031337');
+INSERT INTO `django_migrations` VALUES (22, 'assets', '0007_warninglog_severity', '2018-12-13 17:19:28.786680');
+INSERT INTO `django_migrations` VALUES (23, 'assets', '0008_auto_20181220_0943', '2018-12-20 09:43:14.986039');
 
 -- ----------------------------
 -- Table structure for django_session
@@ -1373,5 +1440,12 @@ CREATE TABLE `django_session`  (
 -- ----------------------------
 INSERT INTO `django_session` VALUES ('5w6bd2bl0mbe8a6w1xwc1slmkxlc6e7i', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-26 12:06:57.678219');
 INSERT INTO `django_session` VALUES ('th6tmnz8hlo6xv42z720fd6455y164sy', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-26 23:02:20.379922');
+INSERT INTO `django_session` VALUES ('v3raycms9u4ipadqht3h2minnct488nt', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-27 20:38:40.171881');
+INSERT INTO `django_session` VALUES ('pjb5kss2wj8igi19y8f8jw2h8dxtp5ia', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-27 20:54:07.683309');
+INSERT INTO `django_session` VALUES ('njq381zmy322oqnrmrn3a9gg9iak4ipm', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-28 09:58:11.088729');
+INSERT INTO `django_session` VALUES ('d7mrjtg6nxma1uitimn7hss44iok7cms', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-28 13:04:17.858003');
+INSERT INTO `django_session` VALUES ('a8i48sp8rd9daw81fpsrs5zkyaxfoxai', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-31 16:55:27.969688');
+INSERT INTO `django_session` VALUES ('1axj5wv9ectoqutt69ly9ryclyvfm0t9', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-31 16:56:25.218239');
+INSERT INTO `django_session` VALUES ('pctq9dpx395zpmv0uw5c5tujd71l0cbk', 'YzU1MWVkOTgxNGExMjc4MjA4ZDI5MDhhNmMzOGVkYzBjMTRmYTJjNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiNDZkOTZlNDUzYzY1MTczNjJmNjNiMTcxYTQ0MWQ1N2IwMzAzNzY5In0=', '2018-12-31 17:08:43.245982');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7ba4727c-2b40-4685-9934-90fdc50fcad3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/assets/models/assets_onfield.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/models/assets_onfield.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/assets/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lesacre.sql" beforeDir="false" afterPath="$PROJECT_DIR$/lesacre.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,7 +20,7 @@
         <entry file="file://$PROJECT_DIR$/assets/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="470">
-              <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
+              <caret line="146" selection-start-line="146" selection-end-line="146" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -35,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/templates/assets/treeview.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="342">
-              <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+              <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -44,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/templates/assets/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="470">
-              <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+              <caret line="300" selection-start-line="300" selection-end-line="300" />
               <folding>
                 <element signature="e#863#2643#0#HTML" />
                 <element signature="e#3055#6101#0#HTML" />
@@ -64,7 +61,7 @@
         <entry file="file://$PROJECT_DIR$/static/js/treeview.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="532">
-              <caret line="33" column="36" lean-forward="true" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
+              <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -73,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/static/js/dashboard1.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="114">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#102#167#0" />
                 <element signature="e#391#539#0" />
@@ -155,7 +152,7 @@
         <entry file="file://$PROJECT_DIR$/templates/assets/analyzing/emd.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="57">
-              <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+              <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -443,7 +440,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32824427" />
@@ -1567,7 +1564,7 @@
     <entry file="file://$PROJECT_DIR$/templates/assets/analyzing/emd.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
-          <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1601,7 +1598,7 @@
     <entry file="file://$PROJECT_DIR$/static/js/dashboard1.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
           <folding>
             <element signature="e#102#167#0" />
             <element signature="e#391#539#0" />
@@ -1681,7 +1678,7 @@
     <entry file="file://$PROJECT_DIR$/templates/assets/treeview.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
-          <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+          <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -1695,7 +1692,7 @@
     <entry file="file://$PROJECT_DIR$/assets/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="470">
-          <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
+          <caret line="146" selection-start-line="146" selection-end-line="146" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -1705,7 +1702,7 @@
     <entry file="file://$PROJECT_DIR$/templates/assets/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="470">
-          <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+          <caret line="300" selection-start-line="300" selection-end-line="300" />
           <folding>
             <element signature="e#863#2643#0#HTML" />
             <element signature="e#3055#6101#0#HTML" />
@@ -1723,7 +1720,7 @@
     <entry file="file://$PROJECT_DIR$/static/js/treeview.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
-          <caret line="33" column="36" lean-forward="true" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
+          <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
         </state>
       </provider>
     </entry>
