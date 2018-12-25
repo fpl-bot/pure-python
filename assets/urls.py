@@ -10,5 +10,5 @@ urlpatterns = [
     path('wp/', views.wp, name='WP'),
     path('emd/', views.emd, name='EMD'),
     path('tv/', views.treeview, name='Tree View'),
-
+    path('assetoverview/',views.assets_overview,name='Asset Overview')
 ]

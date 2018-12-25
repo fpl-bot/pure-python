@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Assets overview{% endblock %}
+{% block css %}
+    <!--This page css - Morris CSS -->
+    <link href="{% static 'plugins/footable/css/footable.core.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/bootstrap-select/bootstrap-select.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'plugins/c3-master/c3.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <div class="row page-titles">
+        <div class="col-md-5 col-8 align-self-center">
+            <h3 class="text-themecolor">Assets overview</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Main Page</a></li>
+                <li class="breadcrumb-item active">Assets overview</li>
+            </ol>
+        </div>
+        <div class="col-md-7 col-4 align-self-center">
+            <div class="d-flex m-t-10 justify-content-end">
+                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                    <div class="chart-text m-r-10">
+                        <h6 class="m-b-0">
+                            <small>THIS MONTH</small>
+                        </h6>
+                        <h4 class="m-t-0 text-info">{{ WarningLogCount.0 }} Warning(s)</h4></div>
+                    <div class="spark-chart">
+                        <div id="monthchart"></div>
+                    </div>
+                </div>
+                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                    <div class="chart-text m-r-10">
+                        <h6 class="m-b-0">
+                            <small>LAST MONTH</small>
+                        </h6>
+                        <h4 class="m-t-0 text-primary text-purple">{{ WarningLogCount.1 }} Warning(s)</h4></div>
+                    <div class="spark-chart">
+                        <div id="lastmonthchart"></div>
+                    </div>
+                </div>
+                <div class="">
+                    <button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10">
+                        <i class="ti-settings text-white"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Assets overview</h4>
+                    <h6 class="card-subtitle">Abstract Information of each asset are presented.</h6>
+                    <div class="row m-t-40">
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-3 col-xlg-3">
+                            <div class="card card-inverse card-info">
+                                <div class="box bg-info text-center">
+                                    <h1 class="font-light text-white">{{ status.0 }}</h1>
+                                    <h6 class="text-white">ONLINE</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-2">
+                            <div class="card card-primary card-inverse">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{ status.1 }}</h1>
+                                    <h6 class="text-white">OFFLINE </h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-2">
+                            <div class="card card-inverse card-success">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{ status.2 }}</h1>
+                                    <h6 class="text-white">UNKNOWN</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-3 col-xlg-2">
+                            <div class="card card-inverse card-dark">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{ status.4 }}</h1>
+                                    <h6 class="text-white">BACKUP</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-2 col-xlg-3">
+                            <div class="card card-inverse card-danger">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{ status.3 }}</h1>
+                                    <h6 class="text-white">DEFECTIVE</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                    </div>
+                    <div class="table-responsive">
+                        <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list"
+                               data-page-size="10">
+                            <thead>
+                            <tr>
+                                <th>ID #</th>
+                                <th>SN</th>
+                                <th>Asset type</th>
+                                <th>Asset subtype</th>
+                                <th>Parent asset</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Statu</th>
+                                <th>Update time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in EquipmentGroups %}
+                            <tr>
+                                <td> EG-{{ item.id }}</td>
+                                <td><a href="javascript:void(0)"> {{ item.sn }}</a></td>
+                                <td>EquipmentGroup</td>
+                                <td>{{ item.get_equipment_group_type_display }}</td>
+                                <td> Null </td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.location }}</td>
+                                <td>{{ item.get_statu_display }}</td>
+                                <td>{{ item.md_time }}</td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
+                                            data-toggle="tooltip" data-original-title="Delete"><i class="ti-close"
+                                                                                                  aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for item in Machines %}
+                            <tr>
+                                <td> MC-{{ item.id }}</td>
+                                <td><a href="javascript:void(0)"> {{ item.sn }}</a></td>
+                                <td>Machine</td>
+                                <td>{{ item.get_machine_type_display }}</td>
+                                <td>{{ item.parent_equipment_group.name }} </td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.location }}</td>
+                                <td>{{ item.get_statu_display }}</td>
+                                <td>{{ item.md_time }}</td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
+                                            data-toggle="tooltip" data-original-title="Delete"><i class="ti-close"
+                                                                                                  aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for item in Components %}
+                            <tr>
+                                <td> CP-{{ item.id }}</td>
+                                <td><a href="javascript:void(0)"> {{ item.sn }}</a></td>
+                                <td>Component</td>
+                                <td>{{ item.get_component_type_display }}</td>
+                                <td>{{ item.parent_machine.name }} </td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.location }}</td>
+                                <td>{{ item.get_statu_display }}</td>
+                                <td>{{ item.md_time }}</td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
+                                            data-toggle="tooltip" data-original-title="Delete"><i class="ti-close"
+                                                                                                  aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="6">
+                                    <div class="text-right">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End row -->
+
+{% endblock %}
+{% block javascritp %}
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- chartist chart -->
+    <script src="{% static 'plugins/chartist-js/dist/chartist.min.js' %}"></script>
+    <script src="{% static 'plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js' %}"></script>
+    <!--c3 JavaScript -->
+    <script src="{% static 'plugins/d3/d3.min.js' %}"></script>
+    <script src="{% static 'plugins/c3-master/c3.min.js' %}"></script>
+
+    <script src="{% static 'plugins/footable/js/footable.all.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}" type="text/javascript"></script>
+    <!--FooTable init-->
+    <script src="{% static 'js/footable-init.js' %}"></script>
+    <script>
+        var WarningLogCount ={{ WarningLogCount }};
+        $('#monthchart').sparkline(WarningLogCount, {
+            type: 'bar',
+            height: '35',
+            barWidth: '4',
+            resize: true,
+            barSpacing: '4',
+            barColor: '#1e88e5'
+        });
+        $('#lastmonthchart').sparkline(WarningLogCount, {
+            type: 'bar',
+            height: '35',
+            barWidth: '4',
+            resize: true,
+            barSpacing: '4',
+            barColor: '#7460ee'
+        });
+    </script>
+
+
+{% endblock %}
+

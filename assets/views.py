@@ -45,7 +45,7 @@ def dashboard(request):
         WarningLogCount = dp.get_warninglogcount(now)
         SignalVolume = dp.get_signaltablevolume()
         SignalCount = SignalCollected.objects.all().count()
-        return render(request, "assets/dashboard.html",
+        return render(request, "assets/main/dashboard.html",
                       {"WarningLogCount": WarningLogCount,
                        "SignalVolume": SignalVolume,
                        "SignalCount": SignalCount,
@@ -144,3 +144,23 @@ def treeview(request):
                 for mp in mc.MeasurePoints.all():
                     treejson['children'][-1]['children'][-1]['children'].append({'name': mp.id, 'label': mp.location})
         return JsonResponse(treejson)
+
+
+def assets_overview(request):
+    if request.method == "GET":
+        now = datetime.datetime.now()
+        EquipmentGroups = EquipmentGroup.objects.all()
+        Machines = Machine.objects.all()
+        Components = Component.objects.all()
+        status = [EquipmentGroup.objects.filter(statu=i).count() +
+                  Machine.objects.filter(statu=i).count() +
+                  Component.objects.filter(statu=i).count()
+                  for i in range(5)]
+        WarningLogCount = dp.get_warninglogcount(now)
+        return render(request, "assets/main/assets_overview.html",
+                      {"WarningLogCount": WarningLogCount,
+                       "EquipmentGroups": EquipmentGroups,
+                       "Machines": Machines,
+                       "Components": Components,
+                       "status":status
+                       })
