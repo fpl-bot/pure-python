@@ -6,6 +6,7 @@
     <link href="{% static 'plugins/footable/css/footable.core.css' %}" rel="stylesheet">
     <link href="{% static 'plugins/bootstrap-select/bootstrap-select.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'plugins/c3-master/c3.min.css' %}" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -67,6 +68,9 @@
                                 <div class="box bg-info text-center">
                                     <h1 class="font-light text-white">{{ status.0 }}</h1>
                                     <h6 class="text-white">ONLINE</h6>
+                                    <button class="btn btn-outline-secondary b-0 waves-effect waves-light m-t-15 border-light">
+                                        Filter
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +80,9 @@
                                 <div class="box text-center">
                                     <h1 class="font-light text-white">{{ status.1 }}</h1>
                                     <h6 class="text-white">OFFLINE </h6>
+                                    <button class="btn btn-outline-secondary b-0 waves-effect waves-light m-t-15 border-light">
+                                        Filter
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -85,6 +92,9 @@
                                 <div class="box text-center">
                                     <h1 class="font-light text-white">{{ status.2 }}</h1>
                                     <h6 class="text-white">UNKNOWN</h6>
+                                    <button class="btn btn-outline-secondary b-0 waves-effect waves-light m-t-15 border-light">
+                                        Filter
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -94,47 +104,84 @@
                                 <div class="box text-center">
                                     <h1 class="font-light text-white">{{ status.4 }}</h1>
                                     <h6 class="text-white">BACKUP</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-lg-2 col-xlg-3">
-                            <div class="card card-inverse card-danger">
-                                <div class="box text-center">
-                                    <h1 class="font-light text-white">{{ status.3 }}</h1>
-                                    <h6 class="text-white">DEFECTIVE</h6>
+                                    <button class="btn btn-outline-secondary b-0 waves-effect waves-light m-t-15 border-light">
+                                        Filter
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-3">
+                            <div class="card card-inverse card-danger ">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{ status.3 }}</h1>
+                                    <h6 class="text-white">DEFECTIVE</h6>
+                                    <button class="btn btn-outline-secondary b-0 waves-effect waves-light m-t-15 border-light">
+                                        Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="table-responsive">
-                        <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list"
-                               data-page-size="10">
-                            <thead>
-                            <tr>
-                                <th>ID #</th>
-                                <th>SN</th>
-                                <th>Asset type</th>
-                                <th>Asset subtype</th>
-                                <th>Parent asset</th>
-                                <th>Name</th>
-                                <th>Location</th>
-                                <th>Statu</th>
-                                <th>Update time</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for item in EquipmentGroups %}
+                        <div class="m-t-40">
+                            <div class="d-flex">
+                                <div class="mr-auto">
+                                    <div class="form-group">
+                                        <input class="input-block-level" id="demo-input-search2" type="text"
+                                               placeholder="Search"
+                                               autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="ml-auto">
+                                    <button id="showallrows" class="btn btn-outline-secondary waves-effect waves-light"
+                                            type="button">
+                                        <span class="btn-label"><i class="mdi mdi-all-inclusive"></i></span>Show all assets
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="demo-foo-addrow2" class="table m-t-30 table-hover no-wrap contact-list"
+                           data-page-size="10">
+                        <thead>
+                        <tr>
+                            <th>ID #</th>
+                            <th>Name</th>
+                            <th>SN</th>
+                            <th>Asset type</th>
+                            <th>Asset subtype</th>
+                            <th>Parent asset</th>
+                            <th>Location</th>
+                            <th>Statu</th>
+                            <th>Update time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in EquipmentGroups %}
                             <tr>
                                 <td> EG-{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
                                 <td><a href="javascript:void(0)"> {{ item.sn }}</a></td>
                                 <td>EquipmentGroup</td>
                                 <td>{{ item.get_equipment_group_type_display }}</td>
-                                <td> Null </td>
-                                <td>{{ item.name }}</td>
+                                <td> Null</td>
                                 <td>{{ item.location }}</td>
-                                <td>{{ item.get_statu_display }}</td>
+                                {% if item.statu == 0 %}
+                                    <td><span class="label label-info">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 1 %}
+                                    <td><span class="label label-primary">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 2 %}
+                                    <td><span class="label label-success">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 3 %}
+                                    <td><span class="label label-danger">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 4 %}
+                                    <td><span class="label label-dark">{{ item.get_statu_display }}</span>
+                                {% endif %}
                                 <td>{{ item.md_time }}</td>
                                 <td>
                                     <button type="button"
@@ -144,17 +191,31 @@
                                     </button>
                                 </td>
                             </tr>
-                            {% endfor %}
-                            {% for item in Machines %}
+                        {% endfor %}
+                        {% for item in Machines %}
                             <tr>
                                 <td> MC-{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
                                 <td><a href="javascript:void(0)"> {{ item.sn }}</a></td>
                                 <td>Machine</td>
                                 <td>{{ item.get_machine_type_display }}</td>
                                 <td>{{ item.parent_equipment_group.name }} </td>
-                                <td>{{ item.name }}</td>
                                 <td>{{ item.location }}</td>
-                                <td>{{ item.get_statu_display }}</td>
+                                {% if item.statu == 0 %}
+                                    <td><span class="label label-info">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 1 %}
+                                    <td><span class="label label-primary">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 2 %}
+                                    <td><span class="label label-success">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 3 %}
+                                    <td><span class="label label-danger">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 4 %}
+                                    <td><span class="label label-dark">{{ item.get_statu_display }}</span>
+                                {% endif %}
                                 <td>{{ item.md_time }}</td>
                                 <td>
                                     <button type="button"
@@ -164,17 +225,31 @@
                                     </button>
                                 </td>
                             </tr>
-                            {% endfor %}
-                            {% for item in Components %}
+                        {% endfor %}
+                        {% for item in Components %}
                             <tr>
                                 <td> CP-{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
                                 <td><a href="javascript:void(0)"> {{ item.sn }}</a></td>
                                 <td>Component</td>
                                 <td>{{ item.get_component_type_display }}</td>
                                 <td>{{ item.parent_machine.name }} </td>
-                                <td>{{ item.name }}</td>
                                 <td>{{ item.location }}</td>
-                                <td>{{ item.get_statu_display }}</td>
+                                {% if item.statu == 0 %}
+                                    <td><span class="label label-info">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 1 %}
+                                    <td><span class="label label-primary">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 2 %}
+                                    <td><span class="label label-success">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 3 %}
+                                    <td><span class="label label-danger">{{ item.get_statu_display }}</span>
+                                    </td>
+                                {% elif item.statu == 4 %}
+                                    <td><span class="label label-dark">{{ item.get_statu_display }}</span>
+                                {% endif %}
                                 <td>{{ item.md_time }}</td>
                                 <td>
                                     <button type="button"
@@ -184,22 +259,22 @@
                                     </button>
                                 </td>
                             </tr>
-                            {% endfor %}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="6">
-                                    <div class="text-right">
-                                        <ul class="pagination"></ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <div class="text-right">
+                                    <ul class="pagination"></ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!--End row -->
 
@@ -218,7 +293,7 @@
     <script src="{% static 'plugins/footable/js/footable.all.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}" type="text/javascript"></script>
     <!--FooTable init-->
-    <script src="{% static 'js/footable-init.js' %}"></script>
+    <script src="{% static 'js/footable-init.js' %}" type="text/javascript"></script>
     <script>
         var WarningLogCount ={{ WarningLogCount }};
         $('#monthchart').sparkline(WarningLogCount, {
@@ -238,7 +313,5 @@
             barColor: '#7460ee'
         });
     </script>
-
-
 {% endblock %}
 
