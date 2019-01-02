@@ -9,13 +9,14 @@ import pymysql
 def get_warninglogcount(now):
     warninglogcount = []
     for i in range(5):
-        start = datetime.date(now.year, now.month - i, 1)
-        end = datetime.date(now.year, now.month - i, calendar.monthrange(now.year, now.month - i)[-1])
         if now.month - i <= 0:
             year = now.year - 1
             month = 12 - i + now.month
             start = datetime.date(year, month, 1)
             end = datetime.date(year, month, calendar.monthrange(year, month)[-1])
+        else:
+            start = datetime.date(now.year, now.month - i, 1)
+            end = datetime.date(now.year, now.month - i, calendar.monthrange(now.year, now.month - i)[-1])
         warninglogcount.append(WarningLog.objects.filter(c_day__range=(start, end)).count())
 
     return warninglogcount

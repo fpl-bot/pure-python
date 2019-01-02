@@ -17,6 +17,7 @@ $(function () {
                     subtext: '',
                 },
                 visualMap: {
+                    type: 'continuous',
                     min: 0,
                     max: 2,
                     calculable: true,
