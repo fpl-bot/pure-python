@@ -162,5 +162,11 @@ def assets_overview(request):
                        "EquipmentGroups": EquipmentGroups,
                        "Machines": Machines,
                        "Components": Components,
-                       "status":status
+                       "status": status
                        })
+
+
+def calender(request, year=2018):
+    if request.is_ajax():
+        warning_list = dp.get_warning_calender(year=year)
+        return JsonResponse({'calender': warning_list})

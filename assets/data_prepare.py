@@ -4,6 +4,7 @@ from assets.models.data import *
 from assets.models.assets_onfield import EquipmentGroup, Machine, Component, Sensor
 from django.db.models import Q
 import pymysql
+import pandas as pd
 
 
 def get_warninglogcount(now):
@@ -31,3 +32,10 @@ def get_signaltablevolume():
     return str(results[0][0])
 
 
+def get_warning_calender(year):
+    date_only_dic = {str(item.date()): 0 for item in pd.date_range('1/1/%s' % year, '31/12/%s' % year, normalize=True)}
+    all_warninglog = WarningLog.objects.all()
+    for wl in all_warninglog:
+        date_only_dic[str(wl.c_day.date())] += 1
+    warning_list = [[date, count] for date, count in date_only_dic.items()]
+    return warning_list

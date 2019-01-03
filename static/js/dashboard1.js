@@ -1,13 +1,3 @@
-/*
-Template Name: Material Pro Admin
-Author: Themedesigner
-Email: niravjoshi87@gmail.com
-File: js
-*/
-
-// ==============================================================
-// This is for the sparkline charts which is coming in the bradcrumb section
-// ==============================================================
 $(document).ready(function () {
     $('#monthchart').sparkline(WarningLogCount, {
         type: 'bar',
@@ -24,13 +14,10 @@ $(document).ready(function () {
         resize: true,
         barSpacing: '4',
         barColor: '#7460ee'
-    });
+    }); //Line Chart in the header to quickly indicate warning record.
 
     function dashboard() {
         "use strict";
-        // ==============================================================
-        // Sales overview
-        // ==============================================================
         $.ajax({
             type: "get",
             url: "/assets/dashboard",
@@ -59,10 +46,36 @@ $(document).ready(function () {
                     plugins: [
                         Chartist.plugins.tooltip()
                     ]
-                });
-                // ==============================================================
-                // Newsletter
-                // ==============================================================
+                }); //Bar Chart
+                chart2.on('draw', function (data) {
+                    if (data.type === 'line' || data.type === 'area') {
+                        data.element.animate({
+                            d: {
+                                begin: 500 * data.index,
+                                dur: 500,
+                                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                                to: data.path.clone().stringify(),
+                                easing: Chartist.Svg.Easing.easeInOutElastic
+                            }
+                        });
+                    }
+                    if (data.type === 'bar') {
+                        data.element.animate({
+                            y2: {
+                                dur: 500,
+                                from: data.y1,
+                                to: data.y2,
+                                easing: Chartist.Svg.Easing.easeInOutElastic
+                            },
+                            opacity: {
+                                dur: 500,
+                                from: 0,
+                                to: 1,
+                                easing: Chartist.Svg.Easing.easeInOutElastic
+                            }
+                        });
+                    }
+                });                          //Bar chart animation
 
                 var myChart_net_grow = echarts.init(document.getElementById('signalpresentation'));
                 var option_net_grow = {
@@ -150,46 +163,9 @@ $(document).ready(function () {
                         $(window).on("resize", resize), $(".sidebartoggler").on("click", resize)
                     });
                 }
-                $("#signal_collected_day").text(data.signal_time);
+                $("#signal_collected_day").text(data.signal_time);                 //Line chart for signal
 
 
-                var chart = [chart2];
-
-                // ==============================================================
-                // This is for the animation
-                // ==============================================================
-
-                for (var i = 0; i < chart.length; i++) {
-                    chart[i].on('draw', function (data) {
-                        if (data.type === 'line' || data.type === 'area') {
-                            data.element.animate({
-                                d: {
-                                    begin: 500 * data.index,
-                                    dur: 500,
-                                    from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                                    to: data.path.clone().stringify(),
-                                    easing: Chartist.Svg.Easing.easeInOutElastic
-                                }
-                            });
-                        }
-                        if (data.type === 'bar') {
-                            data.element.animate({
-                                y2: {
-                                    dur: 500,
-                                    from: data.y1,
-                                    to: data.y2,
-                                    easing: Chartist.Svg.Easing.easeInOutElastic
-                                },
-                                opacity: {
-                                    dur: 500,
-                                    from: 0,
-                                    to: 1,
-                                    easing: Chartist.Svg.Easing.easeInOutElastic
-                                }
-                            });
-                        }
-                    });
-                }
                 var duntchart = c3.generate({
                     bindto: '#visitor',
                     data: {
@@ -228,74 +204,193 @@ $(document).ready(function () {
                     color: {
                         pattern: ['#eceff1', '#745af2', '#26c6da', '#1e88e5']
                     }
-                });
+                });              //Dunt chart
             },
             error: function () {
-                alert('Error: ajax 请求出错！')
+                alert('Error: Ajax request failed')
             }
-        });
-
-
-        // ==============================================================
-        // Our visitor
-        // ==============================================================
-
-
-        // ==============================================================
-        // Badnwidth usage
-        // ==============================================================
-        new Chartist.Line('.usage', {
-            labels: ['0', '4', '8', '12', '16', '20', '24', '30']
-            , series: [
-                [5, 0, 12, 1, 8, 3, 12, 15]
-
-            ]
-        }, {
-            high: 10
-            , low: 0
-            , showArea: true
-            , fullWidth: true
-            , plugins: [
-                Chartist.plugins.tooltip()
-            ], // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
-            axisY: {
-                onlyInteger: true
-                , offset: 20
-                , showLabel: false
-                , showGrid: false
-                , labelInterpolationFnc: function (value) {
-                    return (value / 1) + 'k';
-                }
-            }
-            , axisX: {
-                showLabel: false
-                , divisor: 1
-                , showGrid: false
-                , offset: 0
-            }
-        });
-        // ==============================================================
-        // Download count
-        // ==============================================================
-        var sparklineLogin = function () {
-            $('.spark-count').sparkline([4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9], {
-                type: 'bar'
-                , width: '100%'
-                , height: '70'
-                , barWidth: '2'
-                , resize: true
-                , barSpacing: '6'
-                , barColor: 'rgba(255, 255, 255, 0.3)'
-            });
-
-        };
-        var sparkResize;
-
-        sparklineLogin();
-
+        });//Bar,Line,Dunt Chart in Dashboard
 
     }
 
     dashboard();
     timeTicket = setInterval(dashboard, 20000);
+
+    $.ajax({
+            type: "get",
+            url: "/assets/calender",
+            async: true,
+            dataType: "json",
+            success: function (data) {
+                var calender = echarts.init(document.getElementById('calender'));
+                var calender_option = {
+                    backgroundColor: '#ffffff',
+
+                    title: {
+                        top: 30,
+                        text: 'Warning log count in 2018',
+                        subtext: 'Equipment Group/Machine/Component',
+                        left: 'center',
+                        textStyle: {
+                            color: '#000000'
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    legend: {
+                        top: '30',
+                        left: '30',
+                        data: ['Warning count', 'Top 5'],
+                        textStyle: {
+                            color: '#000000'
+                        }
+                    },
+                    calendar: [{
+                        top: 100,
+                        left: 'center',
+                        range: ['2018-01-01', '2018-06-30'],
+                        splitLine: {
+                            show: true,
+                            lineStyle: {
+                                color: '#000',
+                                width: 4,
+                                type: 'solid'
+                            }
+                        },
+                        yearLabel: {
+                            formatter: '{start}  1st',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#323c48',
+                                borderWidth: 1,
+                                borderColor: '#111'
+                            }
+                        }
+                    }, {
+                        top: 340,
+                        left: 'center',
+                        range: ['2018-07-01', '2018-12-31'],
+                        splitLine: {
+                            show: true,
+                            lineStyle: {
+                                color: '#000',
+                                width: 4,
+                                type: 'solid'
+                            }
+                        },
+                        yearLabel: {
+                            formatter: '{start}  2nd',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#323c48',
+                                borderWidth: 1,
+                                borderColor: '#111'
+                            }
+                        }
+                    }],
+                    series: [
+                        {
+                            name: 'Warning count',
+                            type: 'scatter',
+                            coordinateSystem: 'calendar',
+                            data: data.calender,
+                            symbolSize: function (val) {
+                                return val[1] * 5;
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#f4e925'
+                                }
+                            }
+                        },
+                        {
+                            name: 'Warning count',
+                            type: 'scatter',
+                            coordinateSystem: 'calendar',
+                            calendarIndex: 1,
+                            data: data.calender,
+                            symbolSize: function (val) {
+                                return val[1] * 5;
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#f4e925'
+                                }
+                            }
+                        },
+                        {
+                            name: 'Top 5',
+                            type: 'effectScatter',
+                            coordinateSystem: 'calendar',
+                            calendarIndex: 1,
+                            data: data.calender.sort(function (a, b) {
+                                return b[1] - a[1];
+                            }).slice(0, 5),
+                            symbolSize: function (val) {
+                                return val[1] * 10;
+                            },
+                            showEffectOn: 'render',
+                            rippleEffect: {
+                                brushType: 'stroke'
+                            },
+                            hoverAnimation: true,
+                            itemStyle: {
+                                normal: {
+                                    color: '#f45440',
+                                    shadowBlur: 10,
+                                    shadowColor: '#333'
+                                }
+                            },
+                            zlevel: 1
+                        },
+                        {
+                            name: 'Top 5',
+                            type: 'effectScatter',
+                            coordinateSystem: 'calendar',
+                            data: data.calender.sort(function (a, b) {
+                                return b[1] - a[1];
+                            }).slice(0, 5),
+                            symbolSize: function (val) {
+                                return val[1] * 10;
+                            },
+                            showEffectOn: 'render',
+                            rippleEffect: {
+                                brushType: 'stroke'
+                            },
+                            hoverAnimation: true,
+                            itemStyle: {
+                                normal: {
+                                    color: '#f45440',
+                                    shadowBlur: 10,
+                                    shadowColor: '#333'
+                                }
+                            },
+                            zlevel: 1
+                        }
+                    ]
+                };
+                if (calender_option && typeof calender_option === "object") {
+                    calender.setOption(calender_option, true), $(function () {
+                        function resize() {
+                            setTimeout(function () {
+                                calender.resize()
+                            }, 100)
+                        }
+
+                        $(window).on("resize", resize), $(".sidebartoggler").on("click", resize)
+                    });
+                }
+            }
+        } // Warning log calender
+    );
+
 });
