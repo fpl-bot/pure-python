@@ -70,8 +70,8 @@ class SignalCollected(models.Model):
 
     def get_waveform(self):
         waveform = self.wave.split(';')
-        waveform = map(float, waveform)
-        waveform = list(waveform)
+        del waveform[-1]
+        waveform = [float(item) for item in waveform]
         return waveform
 
     def get_timetick(self):

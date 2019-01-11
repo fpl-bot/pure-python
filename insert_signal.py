@@ -7,8 +7,13 @@ import numpy as np
 root = "G:\Researchs\DATA\Diagnosis&Prognosis-Data\PHM2012\Learning_set\Bearing1_1"
 files = os.listdir(root)
 for file in files :
-    onesig = np.loadtxt(root + '/' + files[0], delimiter=',')[:, 4]
-    SignalCollected.objects.create(measurepoint=MeasurePoint.objects.get(id=2), wave=onesig)
+    loadtext = np.loadtxt(root + '/' + file, delimiter=',')[:, 4]
+    temp = loadtext.tolist()
+    onesig = ''
+    for item in temp:
+        onesig = onesig + str(item)+';'
+
+    SignalCollected.objects.create(measurepoint=MeasurePoint.objects.get(id=2), wave=onesig.strip(' '))
 
 
 initial_datetime = datetime.datetime(2014, 1, 1, 0, 0, 0, 0)
