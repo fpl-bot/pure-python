@@ -24,7 +24,7 @@ def get_warninglogcount(now):
 
 
 def get_signaltablevolume():
-    db = pymysql.connect("localhost", "root", "", "information_schema")
+    db = pymysql.connect("localhost", "root", "Fpl8315814.", "information_schema")
     cursor = db.cursor()
     sql = """select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='lesacre' and table_name='assets_signalcollected';"""
     cursor.execute(sql)
